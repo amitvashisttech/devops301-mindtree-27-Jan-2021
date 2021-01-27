@@ -1,13 +1,15 @@
 #!/bin/bash
 # Install docker from Docker-ce repository
 echo "[TASK 1] Install docker container engine"
+# Adding google DNS for download.docker.com
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 apt-get update
 apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
     software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+curl -4fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository \
    "deb https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
    $(lsb_release -cs) \
