@@ -1,0 +1,340 @@
+    1  ls
+    2  cd 01-Jenkins/
+    3  ls
+    4  cd petclinic-code/
+    5  ls
+    6  rm -rf docker-compose.yaml Dockerfile 
+    7  ls
+    8  cd ..
+    9  ls
+   10  cd ..
+   11  ls
+   12  git add . ; git commit -m "petclinic-code"; git push 
+   13  ls
+   14  cd 01-Jenkins/
+   15  ls
+   16  cd petclinic-code/
+   17  ls
+   18  apt-get install maven -y 
+   19  mvn --version 
+   20  ls
+   21  mvn clean 
+   22* l
+   23  mvn compile 
+   24  ls
+   25* ls -ltr targ
+   26  mvn test 
+   27  mvn package 
+   28  ls
+   29  ls -ltr target/
+   30  mvn clean 
+   31  ls
+   32  cd ..
+   33  ls
+   34  cd ..
+   35  l
+   36  cd 
+   37  ls
+   38  cd .jenkins/
+   39  ls
+   40  cd workspace/
+   41  ls
+   42  cd Petclinic-FreeStyle/
+   43  ls
+   44  mvn clean 
+   45  cd 01-Jenkins/
+   46  ls
+   47  cd petclinic-code/
+   48  ls
+   49  mvn clean 
+   50  ls
+   51  cd ..
+   52  ls
+   53  cd ..
+   54  s
+   55  ls
+   56  mvn clean -f 01-Jenkins/petclinic-code/pom.xml 
+   57  cd ..
+   58  ls
+   59  cd -
+   60  ls
+   61  cd 01-Jenkins/petclinic-code/
+   62  ls
+   63  cd target/
+   64  ls
+   65  cd ..
+   66  ls
+   67  ls -ltr 01-Jenkins/petclinic-code/target/*.war
+   68  ls
+   69  cd 
+   70  ls
+   71  cd devops301-mindtree-27-Jan-2021/
+   72  ls
+   73  git branch 
+   74  git branch jenkins
+   75  ls
+   76  git branch 
+   77  git checkout jenkins
+   78  ls
+   79  rm -rf * 
+   80  ls
+   81  mkdir default
+   82  ls
+   83  cd default/
+   84  ls
+   85  vim 01-Stage-View-Job
+   86  ls
+   87  cp -rf 01-Stage-View-Job JenkinsJob
+   88  mv JenkinsJob Jenkinsfile
+   89  ls
+   90  cd ..
+   91  ls
+   92  git add . ; git commit -m "Jenkinsfile"
+   93  git push 
+   94  git push --set-upstream origin jenkins
+   95  ls
+   96  cd default/
+   97  ls
+   98  cp -rf 01-Stage-View-Job 02-Variable-Job
+   99  ls
+  100  vim 02-Variable-Job 
+  101  ls
+  102  cp -rf 02-Variable-Job Jenkinsfile 
+  103  ls
+  104  cd ..ls
+  105  cd ..
+  106  ls
+  107  git add . ; git commit -m "Jenkinsfile-Variables"; git push 
+  108  vi /root/.jenkins/config.xml 
+  109  ls
+  110  cd 
+  111  ls
+  112  ls -a 
+  113  grep -i password jenkins.log 
+  114  grep -A10 password jenkins.log 
+  115  ls
+  116  cd .jenkins/
+  117  ls
+  118  vim config.xml 
+  119  ls
+  120  cd 
+  121  ls
+  122  cd devops301-mindtree-27-Jan-2021/
+  123  ls
+  124  cd default/
+  125  ls
+  126  cp -rf 02-Variable-Job 03-Tomcat-Deployment
+  127  ls
+  128  ps -ef | grep -i jenkins 
+  129  kill -9 18232
+  130  cd 
+  131  ls
+  132  nohup java -jar /root/jenkins.war --httpPort=9090 >> jenkins.log
+  133  tail -f jenkins.log 
+  134  nohup java -jar /root/jenkins.war --httpPort=9090 >> jenkins.log & 
+  135  tail -f jenkins.log 
+  136  ls
+  137  cd devops301-mindtree-27-Jan-2021/
+  138  ls
+  139  cd default/
+  140  ls
+  141  vim 03-Tomcat-Deployment 
+  142  ls
+  143  cp -rf 03-Tomcat-Deployment Jenkinsfile 
+  144  ls
+  145  cd ..
+  146  git add . ; git commit -m "Jenkinsfile-Tomcat"; git push 
+  147  ls
+  148  cd default/
+  149  ls
+  150  vim Jenkinsfile 
+  151  ls
+  152  cd ..
+  153  ls
+  154  git add . ; git commit -m "Jenkinsfile-Tomcat-U1"; git push 
+  155  ls
+  156  git status 
+  157  git checkout main 
+  158  ls
+  159  echo  "01" > ChangeMe.txt
+  160  ls
+  161  git add . ; git commit -m "ChangeMe.txt"; git push 
+  162  git log 
+  163  ls
+  164  mkdir 02-Docker
+  165  ls
+  166  cd 02-Docker/
+  167  ls
+  168  vim install-docker.sh
+  169  ls
+  170  chmod +x install-docker.sh 
+  171  ./install-docker.sh 
+  172  ls
+  173  docker version 
+  174  ls
+  175  docker run busybox echo "Hellow World"
+  176  docker ps 
+  177  docker ps -a
+  178  docker run -it ubuntu /bin/bash
+  179  docker run -it ubuntu:16.04 /bin/bash
+  180  docker ps 
+  181  docker ps -a
+  182  docker start 1c41ffb0fd4b
+  183  docker ps 
+  184  docker attach 1c41ffb0fd4b
+  185  docker ps 
+  186  docker attach 1c41ffb0fd4b
+  187  docker ps 
+  188  docker attach 1c41ffb0fd4b
+  189  docker ps 
+  190  docker kill 1c41ffb0fd4b
+  191  ls
+  192  docker ps 
+  193  docker ps -a
+  194  docker start 1c41ffb0fd4b
+  195  docker attach 1c41ffb0fd4b
+  196  ls
+  197  docker ps 
+  198  docker ps -a
+  199  docker inspect 1c41ffb0fd4b
+  200  cd /var/lib/docker/containers/1c41ffb0fd4ba839d302f2357525150acd07ccd3c2da894ecf4cfad72ea85360
+  201  ls
+  202  cd checkpoints/
+  203  ls
+  204  cd ..
+  205  ls
+  206  cd shm/
+  207  ls
+  208  cd ..
+  209  ls
+  210  cd ..
+  211  ls
+  212  cd ..
+  213  ls
+  214  cd aufs/
+  215  ls
+  216  cd ..
+  217  ls
+  218  cd ..
+  219  ls
+  220  cd 
+  221  ls
+  222  docker ps -a
+  223  docker rm 1c41ffb0fd4b
+  224  docker ps -a
+  225  docker ps 
+  226  docker run -itd ubuntu:16.04 /bin/bash
+  227  docker ps 
+  228  docker run -itd --name test-apache-1 ubuntu:16.04 /bin/bash
+  229  docker run -itd --name test-apache-2 ubuntu:16.04 /bin/bash
+  230  docker ps 
+  231  docker run -itd --name test-apache-2 ubuntu:16.04 /bin/bash
+  232  docker kill test-apache-2
+  233  docker run -itd --name test-apache-2 ubuntu:16.04 /bin/bash
+  234  docker ps -a 
+  235  docker run -itd --name test-apache-3 ubuntu:16.04 /bin/bash
+  236  ls
+  237  docker ps -a 
+  238  docker container ls 
+  239  docker system prune 
+  240  ls
+  241  docker ps 
+  242  docker ps -q
+  243  docker kill $(docker ps -q)
+  244  docker ps 
+  245  docker ps -a 
+  246  docker rm $(docker ps -qa)
+  247  ls
+  248  docker ps 
+  249  docker run -it ubuntu:16.04 
+  250  ps -ef 
+  251  top 
+  252  docker ls 
+  253  docker container ls 
+  254  docker ps 
+  255  ls
+  256  docker ps 
+  257  docker commit -p -m "Myfirst Apache Ubuntu Test - 1" d9b9ac36cc67 apache-ubuntu:v1
+  258  docker images 
+  259  docker run -itd apache-ubuntu:v1 
+  260  docker ps 
+  261  docker inspect 108389f9a2b8
+  262  curl 172.17.0.3/info.html
+  263  curl 172.17.0.2/info.html
+  264  history 
+  265  ls
+  266  ip addt 
+  267  ip addr
+  268  ls
+  269  curl 172.17.0.2/info.html
+  270  ip addr
+  271  ls
+  272  cd devops301-mindtree-27-Jan-2021/
+  273  ls
+  274  ip addr 
+  275  ls
+  276  docker ps 
+  277  ls
+  278  cd ls
+  279  ls
+  280  cd 02-Docker/
+  281  ls
+  282  mkdir 00-Setup 
+  283  ls
+  284  mv install-docker.sh 00-Setup/
+  285  ls
+  286  mkdir 01-Dockerfiles
+  287  cd 01-Dockerfiles/
+  288  ls
+  289  mkdir apache 
+  290  ls
+  291  cd apache/
+  292  ls
+  293  vim Dockerfile
+  294  ls
+  295  docker build -t apache-df-ub-16:v1 .
+  296  ls
+  297  docker ps 
+  298  docker images 
+  299  docker run -d --name test-1 apache-df-ub-16:v1
+  300  docker ps 
+  301  docker inspect test-1
+  302  curl 172.17.0.4
+  303  ls
+  304  vim index.html 
+  305  ls
+  306  vim Dockerfile 
+  307  ls
+  308  docker build -t apache-df-ub-16:v2 .
+  309  docker ps 
+  310  docker images 
+  311  docker run -d --name test-2 apache-df-ub-16:v2
+  312  curl 172.17.0.4
+  313  curl 172.17.0.5
+  314  docker images 
+  315  docker ps 
+  316  vim Dockerfile 
+  317  docker build -t apache-df-ub-16:v3 .
+  318  ls
+  319  docker images 
+  320  docker inspect apache-df-ub-16:v3
+  321  docker run -d --name test-3 apache-df-ub-16:v3
+  322  docker ps 
+  323  ks
+  324  ls
+  325  vim Dockerfile 
+  326  docker build -t apache-df-ub-16:v4 .
+  327  docker ps 
+  328  docker run -d --name test-4 apache-df-ub-16:v4
+  329  docker ps 
+  330  ls
+  331  cd ..
+  332  ls
+  333  cd .
+  334  cd ..
+  335  ls
+  336  cd ..
+  337  ls
+  338  mkdir History
+  339  ls
+  340  history > History/01-Day1_History.txt
