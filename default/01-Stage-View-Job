@@ -1,0 +1,32 @@
+node ('linux-worker'){
+
+
+stage('Git-CheckOut') {
+  git branch: 'main', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
+}
+
+dir('01-Jenkins/petclinic-code') {
+
+stage('Maven-Clean') {
+    sh 'mvn clean'
+}
+
+stage('Maven-Compile') {
+sh 'mvn compile'
+}
+
+stage('Maven-Test') {
+sh 'mvn test'
+}
+
+stage('Maven-Package') {
+sh 'mvn package'
+}
+
+
+stage('Archive-Artifacts') {
+archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+}
+
+}
+}
