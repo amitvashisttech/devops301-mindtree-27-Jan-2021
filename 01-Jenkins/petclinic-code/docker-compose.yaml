@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  petclinic:
+    build: . 
+    ports:
+      - '30099:8080'
