@@ -1,40 +1,37 @@
 node ('linux-worker'){
 
 
-stage('Git-CheckOut') {
-  git branch: 'main', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
-}
+  stage('CheckOut to Main branch') {
+    sh 'git checkout main'
+  }
 
-// Project Variables
-def project_path = "01-Jenkins/petclinic-code"
+  // Project Variables
+  def project_path = "01-Jenkins/petclinic-code"
 
-dir(project_path) {
+  dir(project_path) {
 
-stage('Maven-Clean') {
-    sh 'mvn clean'
-}
+    stage('Maven-Clean') {
+      sh 'mvn clean'
+    }
 
-stage('Maven-Compile') {
-sh 'mvn compile'
-}
+    stage('Maven-Compile') {
+      sh 'mvn compile'
+    }
 
-stage('Maven-Test') {
-sh 'mvn test'
-}
+    stage('Maven-Test') {
+      sh 'mvn test'
+    }
 
-stage('Maven-Package') {
-sh 'mvn package'
-}
+    stage('Maven-Package') {
+      sh 'mvn package'
+    }
 
+    stage('Archive-Artifacts') {
+      archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+    }
+    stage('Tomcat Deployment') {
+     deploy adapters: [tomcat8(credentialsId: '01', path: '', url: 'http://172.31.0.201:8080/')], contextPath: 'petclinic', onFailure: false, war: 'target/*.war'
 
-stage('Archive-Artifacts') {
-archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
-}
-
-stage('Tomcat Deployment') {
- deploy adapters: [tomcat8(credentialsId: '01', path: '', url: 'http://172.31.0.201:8080/')], contextPath: 'petclinic', onFailure: false, war: '01-Jenkins/petclinic-code/target/petclinic.war'
-
-}
-
-}
+    }
+  }
 }
