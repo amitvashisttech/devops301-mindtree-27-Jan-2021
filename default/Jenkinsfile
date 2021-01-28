@@ -19,7 +19,7 @@ stage('Git-CheckOut') {
 dir(project_path) {
 
 stage('Maven-Clean') {
-    sh 'mvn cleans'
+    sh 'mvn clean'
 }
 
 stage('Maven-Compile') {
