@@ -9,6 +9,8 @@ node ('linux-worker'){
 
 notify('Started')
 
+try {
+
 stage('Git-CheckOut') {
   git branch: 'main', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
 }
@@ -70,7 +72,13 @@ stage('Stage Deployment  - Stage') {
 }
 
 } 
-notify('Done')
+ notify('Completed')
+} catch(err){
+  notify("Error ${err}")
+  currentBuild.result = 'FAILURE'
+
+ }
+
 }
 
 def notify(status){
