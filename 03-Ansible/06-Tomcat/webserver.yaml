@@ -1,0 +1,20 @@
+---
+
+- hosts: worker
+  name: WebServer Setup
+  become: yes
+  tasks:
+  - name: Install Apache2 Packages 
+    apt: name=apache2 state=present
+
+  - name: Start Apache2 Service
+    service: name=apache2 state=started
+ 
+  - name: Disable Firwall 
+    service: name=ufw state=stopped enabled=False
+
+  - name: Deploy Cutsom Web Page
+    copy: src=files/index.html dest=/var/www/html/
+
+  - name: Deploy Cutsom Web Page
+    template: src=templates/info.j2 dest=/var/www/html/info.html

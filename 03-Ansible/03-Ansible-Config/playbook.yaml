@@ -1,0 +1,22 @@
+---
+
+- hosts: worker
+  name: WebServer Setup
+  become: yes
+  tasks:
+  - name: Install Apache2 Packages 
+    apt: name=apache2 state=present
+
+  - name: Start Apache2 Service
+    service: name=apache2 state=started
+
+
+
+
+- hosts: worker
+  name: Kernel Check
+  become: yes
+  tasks:
+  - name: Check the Kernel Details 
+    command: 'uname -a'
+

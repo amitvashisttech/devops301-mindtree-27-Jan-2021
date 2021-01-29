@@ -1,0 +1,31 @@
+---
+
+- hosts: tomcat
+  name: "My Tomcat App Server Deployment"
+  become: yes 
+  vars:
+    doc_tomcat: "/opt/SP/apps"
+    doc_tomcat_webapps: "/opt/SP/apps/tomcat/webapps/jenkins"
+    download_url: "https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz"
+
+  tasks:
+  - name: Tomcat Home Dir
+    file: path={{doc_tomcat}}/tomcat state=directory
+
+  - name: Install Default JDK 1.8 
+    apt: name=default-jdk state=present
+
+  - name: Download Tomcat Tarball
+    get_url: url={{download_url}} dest={{doc_tomcat}}/tomcat.tar.gz mode=0755
+
+  - name: Extract Tomcat TarBall
+    command: "tar zxf {{doc_tomcat}}/tomcat.tar.gz -C {{doc_tomcat}}/tomcat --strip-components 1"
+
+  - name: Tomcat WebApp Dir
+    file: path={{ doc_tomcat_webapps}} state=directory
+
+  - name: Deploy Jenkins Index Page
+    copy: src=files/index.html dest={{doc_tomcat_webapps}}/index.html
+
+  - name: Start Tomcat App Server 
+    shell: "nohup sh /opt/SP/apps/tomcat/bin/catalina.sh start"
