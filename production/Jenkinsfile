@@ -12,66 +12,31 @@ notify('Started')
 try {
 
 stage('Git-CheckOut') {
-  git branch: 'main', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
+  git branch: 'production', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
 }
 
-
-dir(project_path) {
-
-stage('Maven-Clean') {
-    sh 'mvn clean'
-}
-
-stage('Maven-Compile') {
-sh 'mvn compile'
-}
-
-stage('Maven-Test') {
-sh 'mvn test'
-}
-
-stage('Maven-Package') {
-sh 'mvn package'
-}
-
-stage('SonarQube') {
-  withSonarQubeEnv('Sonar') {
-    sh 'mvn sonar:sonar'
-  }
-}
-
-stage('Build Management') {
-   def uploadSpec = """{ 
+stage('Download Package') {
+   def downloadSpec = """{ 
      "files": [
        {
-        "pattern": "**/*.war",
-         "target": "petclinic-war"
+        "pattern": "petclinic-war/*.war",
+         "target": "roles/petclinic/files/"
        }
       ]
 
    }"""
-   server.upload spec: uploadSpec
+   server.download spec: downloadSpec
 }
 
-stage('Publish Build Info'){
-  server.publishBuildInfo buildInfo
+stage('Getting Ready For Ansible Deployment'){
+  sh "echo \'<h1>JENKINS TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>\' > roles/petclinic/files/jenkins.html"
 }
 
-
-stage('Archive-Artifacts') {
-archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+stage('Deployment - Production') {
+  sh 'ansible-playbook petclinic.yaml'
 }
 
-
-stage('PreProd Deployment - Docker') {
-sh 'docker-compose up -d --build'
-}
-
-stage('Stage Deployment  - Stage') {
- deploy adapters: [tomcat8(credentialsId: '01', path: '', url: 'http://172.31.0.201:8080/')], contextPath: 'petclinic', onFailure: false, war: 'target/petclinic.war'
-}
-
-} 
+ 
  notify('Completed')
 } catch(err){
   notify("Error ${err}")
