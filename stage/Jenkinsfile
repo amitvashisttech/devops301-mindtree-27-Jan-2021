@@ -33,7 +33,7 @@ stage('Stage Deployment  - Stage') {
  deploy adapters: [tomcat8(credentialsId: '01', path: '', url: 'http://172.31.0.201:8080/')], contextPath: 'petclinic', onFailure: false, war: 'files/petclinic.war'
 }
 
-} 
+ 
  notify('Completed')
 } catch(err){
   notify("Error ${err}")
