@@ -1,0 +1,7 @@
+---
+
+- hosts: worker
+  name: WebServer Setup
+  become: yes
+  roles:
+  - webserver
