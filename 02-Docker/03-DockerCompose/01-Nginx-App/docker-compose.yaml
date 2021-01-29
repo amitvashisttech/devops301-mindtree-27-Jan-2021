@@ -1,6 +1,0 @@
----
-
-nginx:
-  image: nginx:latest
-  ports: 
-    - '8090:80'
