@@ -1,0 +1,53 @@
+node ('linux-worker'){
+// Get Artifactory Server Instance Details
+  def server = Artifactory.server "01"
+  def buildInfo = Artifactory.newBuildInfo()
+   
+
+// Project Variables
+  def project_path = "Download"
+
+notify('Started')
+
+try {
+
+stage('Git-CheckOut') {
+  git branch: 'stage', url: 'https://github.com/amitvashisttech/devops301-mindtree-27-Jan-2021.git'
+}
+
+stage('Download Package') {
+   def downloadSpec = """{ 
+     "files": [
+       {
+        "pattern": "petclinic-war/*.war",
+         "target": "files/"
+       }
+      ]
+
+   }"""
+   server.download spec: downloadSpec
+}
+
+
+stage('Stage Deployment  - Stage') {
+ deploy adapters: [tomcat8(credentialsId: '01', path: '', url: 'http://172.31.0.201:8080/')], contextPath: 'petclinic', onFailure: false, war: 'files/petclinic.war'
+}
+
+} 
+ notify('Completed')
+} catch(err){
+  notify("Error ${err}")
+  currentBuild.result = 'FAILURE'
+
+ }
+
+}
+
+def notify(status){
+    emailext( 
+      to: "amitvashist7@outlook.com",
+      subject: "${status}: JOB '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>${status}: JOB '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+               <p> Check the Console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a></p>""",
+    )
+}
