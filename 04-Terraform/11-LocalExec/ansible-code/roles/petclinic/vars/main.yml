@@ -1,0 +1,5 @@
+---
+# vars file for tomcat
+doc_tomcat: "/opt/SP/apps"
+doc_tomcat_webapps: "/opt/SP/apps/tomcat/webapps/jenkins"
+download_url: "https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz"
