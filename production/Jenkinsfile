@@ -32,10 +32,6 @@ stage('Getting Ready For Ansible Deployment'){
   sh "echo \'<h1>JENKINS TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>\' > ansible-code/roles/petclinic/files/jenkins.html"
 }
 
-#stage('Deployment - Production') {
-#  sh 'ansible-playbook petclinic.yaml'
-#}
-
 
 stage('Petclinic Ansible Deployment-Prod') {
   sh '/usr/bin/terraform init'
