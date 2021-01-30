@@ -20,7 +20,7 @@ stage('Download Package') {
      "files": [
        {
         "pattern": "petclinic-war/*.war",
-         "target": "roles/petclinic/files/"
+         "target": "ansible-code/roles/petclinic/files/"
        }
       ]
 
@@ -29,13 +29,18 @@ stage('Download Package') {
 }
 
 stage('Getting Ready For Ansible Deployment'){
-  sh "echo \'<h1>JENKINS TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>\' > roles/petclinic/files/jenkins.html"
+  sh "echo \'<h1>JENKINS TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>\' > ansible-code/roles/petclinic/files/jenkins.html"
 }
 
-stage('Deployment - Production') {
-  sh 'ansible-playbook petclinic.yaml'
-}
+#stage('Deployment - Production') {
+#  sh 'ansible-playbook petclinic.yaml'
+#}
 
+
+stage('Petclinic Ansible Deployment-Prod') {
+  sh '/usr/bin/terraform init'
+  sh '/usr/bin/terraform apply -input=false --auto-approve'
+}
  
  notify('Completed')
 } catch(err){
