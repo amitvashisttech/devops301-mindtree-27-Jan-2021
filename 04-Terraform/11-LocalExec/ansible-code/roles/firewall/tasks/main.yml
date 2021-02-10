@@ -1,0 +1,5 @@
+---
+# tasks file for server-common
+
+- name: Disable Firwall 
+  service: name=ufw state=stopped enabled=False
